@@ -1,5 +1,24 @@
 #include <stdio.h>
 
+float calculateAverage(int marks[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += marks[i];
+    }
+    return sum / (float)size;
+}
+
+char calculateGrade(float average) {
+    if (average >= 80)
+        return 'A';
+    else if (average >= 60)
+        return 'B';
+    else if (average >= 40)
+        return 'C';
+    else
+        return 'F';
+}
+
 int main() {
     int marks[3][3] = {
         {50, 60, 70},
@@ -7,32 +26,17 @@ int main() {
         {30, 40, 50}
     };
     char students[3][10] = {"Ali", "Bob", "Cat"};
-    int i, j, total;
-    float average;
+    int i, j, total, topper = 0;
+    int highest = 0;
 
     for (i = 0; i < 3; i++) {
-        total = 0;
-        for (j = 0; j < 3; j++) {
-            total += marks[i][j];
-        }
-        average = total / 3.0;
+        float average = calculateAverage(marks[i], 3);
+        char grade = calculateGrade(average);
+        printf("%s Grade %c average=%.2f\n", students[i], grade, average);
 
-        if (average >= 80)
-            printf("%s Grade A average=%.2f\n", students[i], average);
-        else if (average >= 60)
-            printf("%s Grade B average=%.2f\n", students[i], average);
-        else if (average >= 40)
-            printf("%s Grade C average=%.2f\n", students[i], average);
-        else
-            printf("%s Fail average=%.2f\n", students[i], average);
-    }
-
-    int highest = 0, topper = 0;
-    for (i = 0; i < 3; i++) {
         total = 0;
-        for (j = 0; j < 3; j++) {
+        for (j = 0; j < 3; j++)
             total += marks[i][j];
-        }
         if (total > highest) {
             highest = total;
             topper = i;
